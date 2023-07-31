@@ -57,7 +57,7 @@ def batched_generate(generator,
 def generate_on_prompts(generator, prompts, temperature=1, 
     num_beams=None, n=3, do_sample=True, batch_size=128, **kwargs):
     preds_list = batched_generate(generator, prompts,
-        temperature=temperature, n=n, 
+        temperature=temperature,
         num_beams=num_beams, 
         do_sample=do_sample, batch_size=batch_size, **kwargs)
     if len(prompts) == 1:
@@ -65,7 +65,9 @@ def generate_on_prompts(generator, prompts, temperature=1,
     preds_list_cleaned = []
     for prompt, preds in zip(prompts, preds_list):
         prev_list = set()
+        
         for s in preds:
+            
             total_sequence = s["generated_text"].split(PERETURB_TOK)[-1]
             normalized, _ = remove_blanks(total_sequence)
             input_ctrl_code, normalized = split_ctrl_code(normalized)
