@@ -30,7 +30,13 @@ def get_one_random_idx_set(
     max_blank_block = min(len(idx_range), max_blank_block)        
     #print(req_dep, idx_range)
     selected_indexes = []
+    MAX_ITER = 100
+    iterator = 0
     while max_blank_block > 0 and not selected_indexes:
+        if iterator>=MAX_ITER:
+            raise ValueError('exceeded maximum derpth')
+        iterator+=1
+        
         # if fixed the thing to change, then do one specific change
         n_perturb = np.random.choice(list(range(1, max_blank_block+1))) #if req_dep is None else 1
         replace_idx, total_run = -1, 1000
